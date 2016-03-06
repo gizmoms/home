@@ -1,0 +1,55 @@
+.bookmarks {
+    max-width: 1440px;
+    min-height: 850px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.bookmarks-section {
+    width: 360px;
+    height: 100%;
+    float: left;
+}
+
+.category {
+    width: 340px;
+    display: inline-block;
+    margin: 0 10px 50px;
+}
+
+.category h3 {
+    height: 30px;
+    margin: 0 0 10px 10px;
+}
+
+.category .box {
+    margin: 10px;
+    float: left;
+    background-color: #d23939;
+}
+
+.box-small {
+    width: 65px;
+    height: 65px;
+}
+
+.box-big {
+    width: 150px;
+    height: 150px;
+}
+
+.box-small-wide {
+    width: 150px;
+    height: 65px;
+}
+
+.box-big-wide {
+    width: 320px;
+    height: 150px;
+}
+
+@media all and (max-width: 1280px) {
+    .bookmarks {
+        padding: 50px 70px;
+    }
+}

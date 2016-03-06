@@ -1,0 +1,70 @@
+@import "addProduct.css";
+
+#purchase {
+    background: #e4e4e4;
+    color: #333;
+}
+
+#new-purchase table .form-control {
+    background-color: inherit;
+    border: none;
+}
+
+.purchase {
+    max-width: 1440px;
+    min-height: 600px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+#new-purchase {
+    display: none;
+    visibility: hidden;
+}
+
+.purchase .new {
+    min-height: 550px;
+    padding: 50px;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
+.product-table {
+    padding: 100px 0 0;
+}
+
+.product-table table {
+    width: 100%;
+}
+
+.product-table thead th {
+    border-bottom: 1px solid #999999;
+}
+
+.product-table table th, .product-table table td {
+    height: 50px;
+    padding: 0 5px 0 10px;
+}
+
+.product-table tbody tr:first-child td {
+    height: 70px;
+}
+
+.product-table tbody tr:nth-child(even) {
+    background-color: #e4e4e4;
+}
+
+.product-table tfoot td:nth-last-child(1),
+.product-table tfoot td:nth-last-child(2),
+.product-table tfoot td:nth-last-child(3){
+    border-top: 2px solid #999999;
+}
+
+.footer {
+    padding-top: 50px;
+}
+
+.footer button {
+    margin-right: 20px;
+}
+

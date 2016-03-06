@@ -1,0 +1,145 @@
+html {
+    background-color: #1d1d1d;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #1d1d1d;
+    background-image: url('./../images/main_wall_02.jpg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 625px;
+    color: #ededed;
+}
+
+body, h1, h2, h3, h4, h5, h6,
+p, span, input, div {
+    font-family: 'Calibri', serif;
+    font-size: 16pt;
+    font-weight: 200;
+    letter-spacing: 0.7px;
+    word-spacing: 1.2px;
+    word-wrap: break-word;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: #999999;
+}
+
+h3 i {
+    font-size: 0.8em;
+}
+
+.font-big {
+    font-size: 1.5em;
+}
+
+.font-small {
+    font-size: 0.8em;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.a-left {
+    text-align: left;
+}
+
+.a-right {
+    text-align: right;
+}
+
+.a-center {
+    text-align: center;
+}
+
+input {
+    color: #333;
+}
+
+footer {
+    min-height: 300px;
+}
+
+section {
+    background-color: rgba(0,0,0,0.3 );
+}
+
+.content-section {
+    padding-top: 75px;
+}
+
+.row-fluid {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.sections {
+}
+
+#login .modal-body .row {
+    padding: 10px 0;
+}
+
+.modal {
+    color: #333;
+}
+
+.form-group {
+    padding: 18px 0;
+}
+
+.heading {
+    margin-bottom: 50px;
+}
+
+.heading h1, .heading div, .heading em,
+.heading span, .heading p {
+    font-family: "Roboto", arial, serif;
+}
+
+.icon {
+    color: #999;
+    cursor: pointer;
+}
+
+.icon-small {
+    font-size: 0.7em;
+    padding-bottom: 0.3em;
+}
+
+.icon-body:hover i{
+    color: #678CE0;
+}
+
+.icon:hover {
+    color: #678CE0;
+}
+
+.modal-dialog.modal-login {
+    max-width: 300px;
+}
+
+.modal-dialog.modal-login .modal-footer {
+    border-top: none;
+}
+
+@import "custom/colors.css";
+@import "custom/bootstrap-fixes.css";
+@import "custom/home.css";
+@import "custom/purchase.css";

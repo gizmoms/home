@@ -1,0 +1,23 @@
+.white {
+    color: #ffffff;
+}
+
+.blue {
+    color: #678CE0;
+}
+
+.grey {
+    color: #666666;
+}
+
+.grey:hover {
+
+}
+
+.grey-bg {
+    background-color: #666666;
+}
+
+.grey-bg:hover {
+    background-color: #333333;
+}
