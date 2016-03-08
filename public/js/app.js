@@ -72,12 +72,11 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.newShop.countrySelected = $scope.countryList[80];
     });
 
-    $http.get('/getProductNames').then(function(productsNamesResponse) {
-        $scope.productsNamesList =  productsNamesResponse.data.productsNamesList;
-        $scope.productsNamesList.unshift({
-            id: 'newName',
-            name: 'neues Produkt'
-        });
+    $http.get('/getProductsNames').then(function(productsNamesResponse) {
+        $scope.productsNames = productsNamesResponse.data.productsNames;
+        $scope.unitList = productsNamesResponse.data.unitList;
+        $scope.productsList = productsNamesResponse.data.products;
+        console.log($scope.productsList);
     });
 
     $scope.updateProducts = function() {
@@ -124,6 +123,13 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         {
             $("#new-product-modal").modal();
         }
+    };
+
+    $scope.updateNewProductUnit = function() {
+        console.log('#####');
+        var result = $.grep($scope.productList, function(e){ return e.name == $scope.newProduct.name; });
+        $scope.newProduct.unit = result[0].unit;
+        console.log(result);
     };
 
     $scope.submit = function(){

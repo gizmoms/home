@@ -14,7 +14,7 @@
     <div class="col-sm-10 col-sm-offset-1">
         <div class="purchase">
             <div class="heading">
-                <h1><a><i class="fa fa-arrow-left icon icon-small" title="vorheriger Monat"></i></a> <i class="glyphicon glyphicon-cog icon icon-small" title="bearbeiten"></i></h1>
+                <h1><a><i class="fa fa-arrow-left icon icon-small" title="vorheriger Monat"></i></a> März <i class="glyphicon glyphicon-cog icon icon-small" title="bearbeiten"></i></h1>
             </div>
 
             <div class="purchase-content">
