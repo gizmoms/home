@@ -27,7 +27,10 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
 
     $scope.newShop = {};
 
-    $scope.newProduct =  {};
+    $scope.newProduct =  {
+        newStockProduct: false,
+        newUnit: false
+    };
 
     $scope.addItem = function() {
         $scope.id = $scope.id+1;
@@ -72,11 +75,10 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.newShop.countrySelected = $scope.countryList[80];
     });
 
-    $http.get('/getProductsNames').then(function(productsNamesResponse) {
+    $scope.getProductDetails = $http.get('/getProductsNames').then(function(productsNamesResponse) {
         $scope.productsNames = productsNamesResponse.data.productsNames;
         $scope.unitList = productsNamesResponse.data.unitList;
         $scope.productsList = productsNamesResponse.data.products;
-        console.log($scope.productsList);
     });
 
     $scope.updateProducts = function() {
@@ -126,10 +128,29 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
     };
 
     $scope.updateNewProductUnit = function() {
-        console.log('#####');
+        if($scope.newProduct.newStockProduct == false) {
+            var result = $.grep($scope.productList, function(e){ return e.name == $scope.newProduct.name; });
+            $scope.newProduct.unit = result[0].unit;
+            $scope.newProduct.newUnit = false;
+        }
+    };
+
+    $scope.checkNewUnit = function() {
+        if(isNotInArray($scope.newProduct.unit, $scope.unitList)) {
+            $scope.newProduct.newUnit = true;
+        } else {
+            $scope.newProduct.newUnit = false;
+        }
+    };
+
+    $scope.checkNewStockProduct = function() {
         var result = $.grep($scope.productList, function(e){ return e.name == $scope.newProduct.name; });
-        $scope.newProduct.unit = result[0].unit;
-        console.log(result);
+        if(result.length <= 0) {
+            $scope.newProduct.newStockProduct = true;
+        } else {
+            $scope.newProduct.newStockProduct = false;
+            $scope.updateNewProductUnit();
+        }
     };
 
     $scope.submit = function(){
@@ -144,16 +165,41 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
 
     $scope.submitShop = function() {
         $scope.newShop.countrySelected = $scope.newShop.countrySelected.id;
-        console.log($scope.newShop);
         $http({
             url: '/newShop',
             method: "POST",
             data: { 'newShop': $scope.newShop }
         }).then(
             function(newShop){
-                console.log(newShop);
                 $scope.purchaseMessage = 'Speichern erfolgreich'
             }
         )
     };
+
+    $scope.submitProduct = function() {
+        $scope.newProduct.shopId = $scope.shopSelected.id;
+        console.log($scope.newProduct);
+        if($scope.newProduct.newUnit == false) {
+            var unitIndex = $scope.unitList.indexOf($scope.newProduct.unit);
+            $scope.newProduct.unitId = unitIndex +1;
+        }
+        $http({
+            url: '/newProduct',
+            method: "POST",
+            data: { 'newProduct': $scope.newProduct }
+        }).then(
+            function(newProductResponse){
+                $scope.purchaseMessage = 'Speichern erfolgreich'
+                var item = $scope.invoice.items[$scope.invoice.items.length -1];
+                $scope.getProductDetails();
+                item.single_price = newProductResponse.data.newProduct.single_price;
+                item.productFirstSelect.selectedOptions = newProductResponse.data.newProduct.id;
+                $("#new-product-modal").modal('hide');
+            }
+        )
+    };
+
+    function isNotInArray(value, array) {
+        return array.indexOf(value) == -1;
+    }
 });

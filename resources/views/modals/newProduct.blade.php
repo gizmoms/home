@@ -13,24 +13,50 @@
                                        type="text"
                                        class="form-control"
                                        ng-model="newProduct.name"
-                                       ng-change="updateNewProductUnit()"
-                                       ng-required
+                                       ng-change="checkNewStockProduct()"
+                                       ng-required="true"
                                        list="productsNames"
-                                       placeholder="Name">
+                                       placeholder="Name"
+                                       autocomplete="off">
                                 <datalist id="productsNames">
                                     <option ng-repeat="productName in productsList" value="{% productName.name %}">
                                 </datalist>
                             </div>
                             <div class="col-md-4 col-md-offset-1">
-                                <input name="newProduct[unit]" type="text" class="form-control" ng-model="newProduct.unit" ng-required list="productsUnits" placeholder="Einheit">
+                                <input name="newProduct[unit]"
+                                       type="text"
+                                       class="form-control"
+                                       ng-model="newProduct.unit"
+                                       ng-change="checkNewUnit()"
+                                       ng-required="true"
+                                       list="productsUnits"
+                                       placeholder="Einheit"
+                                       autocomplete="off">
                                 <datalist id="productsUnits">
                                     <option ng-repeat="unit in unitList" value="{% unit %}">
                                 </datalist>
                             </div>
                         </div>
+                        <div class="form-group" ng-if="newProduct.newUnit">
+                            <div class="col-md-4 col-md-offset-1">
+                                <input name="newProduct[newUnitCode]"
+                                       type="string"
+                                       class="form-control"
+                                       ng-model="newProduct.newUnitCode"
+                                       ng-required="{% newProduct.newUnit %}"
+                                       placeholder="Abkürzung Einheit">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-4 col-md-offset-1">
-                                <input name="newProduct[singlePrice]" type="number" step="0.01" min="0" class="form-control" ng-model="newProduct.singlePrice" ng-required placeholder="Einzelpreis">
+                                <input name="newProduct[singlePrice]"
+                                       type="number"
+                                       step="0.01"
+                                       min="0"
+                                       class="form-control"
+                                       ng-model="newProduct.singlePrice"
+                                       ng-required="true"
+                                       placeholder="Einzelpreis">
                             </div>
                         </div>
                     </div>

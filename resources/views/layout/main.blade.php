@@ -10,7 +10,7 @@
     <link href="{{ asset('/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+    <link href="{{ asset('/css/angular-material.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/general.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.circliful.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/includes.css') }}" rel="stylesheet">
@@ -46,13 +46,13 @@
 <script src="{{ asset('/js/jquery.circliful.min.js') }}"></script>
 <script src="{{ asset('/js/custom.jquery.js') }}"></script>
 <!-- Angular Material Dependencies -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+<script src="{{ asset('/js/angular.min.js') }}"></script>
+<script src="{{ asset('/js/angular-animate.min.js') }}"></script>
+<script src="{{ asset('/js/angular-aria.min.js') }}"></script>
 <script src="{{ asset('/js/moment.min.js') }}"></script>
 <script src="{{ asset('/js/custom.js') }}"></script>
 <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
-<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+<script src="{{ asset('/js/angular-material.min.js') }}"></script>
 @yield('js_files')
 <script>
     $("document").ready(function(){
