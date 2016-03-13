@@ -21,5 +21,6 @@ Route::post('/getProducts', 'ProductController@getList');
 Route::get('/getShops', 'ShopController@getList');
 Route::get('/getCountries', 'ShopController@getCountryList');
 Route::get('/getProductsNames', 'ProductController@getProductsNames');
+Route::get('/getCategories', 'CategoryController@getCategoryList');
 Route::post('/newShop', 'ShopController@newShop');
 Route::post('/newProduct', 'ProductController@newProduct');

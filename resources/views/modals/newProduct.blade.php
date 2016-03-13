@@ -1,3 +1,7 @@
+@section('jquery_files')
+    $(".categories").select2();
+@append
+
 <div id="new-product-modal" class="modal fade" role="dialog" tabindex="-1" >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -37,8 +41,16 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="form-group" ng-if="newProduct.newUnit">
-                            <div class="col-md-4 col-md-offset-1">
+                        <div class="form-group" ng-if="newProduct.newUnit || newProduct.newStockProduct">
+                            <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newStockProduct">
+                                <select name="categories_id" class="categories"
+                                        multiple="multiple"
+                                        ng-options="category as category.name for category in categoryList track by category.id"
+                                        ng-model="categorySelected"
+                                        ng-change="updateCategories()">
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newUnit">
                                 <input name="newProduct[newUnitCode]"
                                        type="string"
                                        class="form-control"

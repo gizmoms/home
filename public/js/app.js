@@ -65,7 +65,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.shopList = shopsResponse.data.shopList;
         $scope.shopList.unshift({
             id: 'newShop',
-            name: 'Laden hinzufügen'
+            name: 'neuen Markt hinzufügen'
         });
         $scope.shopSelected = "";
     });
@@ -75,11 +75,22 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.newShop.countrySelected = $scope.countryList[80];
     });
 
-    $scope.getProductDetails = $http.get('/getProductsNames').then(function(productsNamesResponse) {
-        $scope.productsNames = productsNamesResponse.data.productsNames;
-        $scope.unitList = productsNamesResponse.data.unitList;
-        $scope.productsList = productsNamesResponse.data.products;
+    $http.get('/getCategories').then(function(categoriesResponse) {
+        if(categoriesResponse.data.success == true){
+            $scope.categoryList = categoriesResponse.data.categoryList;
+            console.log($scope.categoryList);
+        } else {
+            $scope.message = categoriesResponse.data.message;
+        }
     });
+
+    $scope.getProductDetails = function() {
+        $http.get('/getProductsNames').then(function(productsNamesResponse) {
+            $scope.productsNames = productsNamesResponse.data.productsNames;
+            $scope.unitList = productsNamesResponse.data.unitList;
+            $scope.productsList = productsNamesResponse.data.products;
+        });
+    }
 
     $scope.updateProducts = function() {
         if($scope.shopSelected.id == 'newShop')
@@ -99,7 +110,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
                     };
                     $scope.productData.availableOptions.unshift({
                         id: 'newProduct',
-                        name: 'Produkt hinzufügen'
+                        name: 'neues Produkt hinzufügen'
                     });
                     angular.forEach(productsResponse.data.productList, function(product) {
                         $scope.products.items.push({
@@ -121,8 +132,10 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
 
     $scope.updateSinglePrice = function(item, selected) {
         item.single_price = selected.single_price;
+        console.log(selected);
         if(selected.id == 'newProduct')
         {
+            $scope.getProductDetails();
             $("#new-product-modal").modal();
         }
     };
@@ -150,6 +163,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         } else {
             $scope.newProduct.newStockProduct = false;
             $scope.updateNewProductUnit();
+            $scope.newProduct.productId = result[0].id;
         }
     };
 
@@ -189,12 +203,23 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
             data: { 'newProduct': $scope.newProduct }
         }).then(
             function(newProductResponse){
-                $scope.purchaseMessage = 'Speichern erfolgreich'
-                var item = $scope.invoice.items[$scope.invoice.items.length -1];
-                $scope.getProductDetails();
-                item.single_price = newProductResponse.data.newProduct.single_price;
-                item.productFirstSelect.selectedOptions = newProductResponse.data.newProduct.id;
-                $("#new-product-modal").modal('hide');
+                if(newProductResponse.data.success == true){
+                    $("#new-product-modal").modal('hide');
+                    $scope.purchaseMessage = newProductResponse.data.message
+                    var item = $scope.invoice.items[$scope.invoice.items.length -1];
+                    item.productList = newProductResponse.data.productList
+                    item.productFirstSelect = {
+                        availableOptions: newProductResponse.data.productList,
+                        selectedOptions: item.productList[5]
+                    };
+                    item.single_price = newProductResponse.data.newProduct.single_price;
+                    item.productList.id = newProductResponse.data.newProduct.id;
+                    item.productList.name = newProductResponse.data.newProduct.name;
+                    item.productList.unit = newProductResponse.data.newProduct.unitName;
+                    item.productList.single_price = newProductResponse.data.newProduct.single_price;
+                } else if(newProductResponse.data.success == false) {
+                    alert('blaaaa');
+                }
             }
         )
     };

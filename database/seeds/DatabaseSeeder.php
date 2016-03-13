@@ -48,6 +48,12 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make( '1988link' ),
         ] );
 
+        User::firstOrCreate([
+           'email'  =>  'admin@mihawk.org',
+            'name'  =>  'admin',
+            'password'  => Hash::make('admin12345')
+        ]);
+
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         $this->command->info('Die User wurden angelegt :-)');
@@ -85,18 +91,15 @@ class CategoryTableSeeder extends Seeder
 {
     public function run() {
         Category::firstOrCreate([
-            'name' => 'Nahrungsmittel',
-            'code' => 'NM'
+            'name' => 'Nahrungsmittel'
         ]);
 
         Category::firstOrCreate([
-            'name' => 'Haushaltsmittel',
-            'code' => 'HM'
+            'name' => 'Haushaltsmittel'
         ]);
 
         Category::firstOrCreate([
-            'name' => 'Sonstiges',
-            'code' => 'So'
+            'name' => 'Sonstiges'
         ]);
     }
 }
@@ -839,19 +842,8 @@ class AddressTableSeeder extends Seeder
     public function run(){
         Address::firstOrCreate([
             'country_id' => '81',
-            'street' => 'Ossenreyer Straße',
-            'streetnumber' => '57',
-            'city' => 'Stralsund',
-            'zip' => '18439'
+            'city' => 'Stralsund'
         ]);
-
-        Address::firstOrCreate([
-           'country_id' => '81',
-           'street' => 'Am Zuckergraben',
-           'streetnumber' => '1',
-           'city' => 'Stralsund',
-           'zip' => '18439'
-       ]);
     }
 }
 
@@ -859,13 +851,13 @@ class ShopTableSeeder extends Seeder
 {
     public function run(){
         Shop::firstOrCreate([
-            'name' => 'Edeka Redmann',
+            'name' => 'Edeka',
             'address_id' => '1'
         ]);
 
         Shop::firstOrCreate([
             'name' => 'Penny',
-            'address_id' => '2'
+            'address_id' => '1'
         ]);
     }
 }
