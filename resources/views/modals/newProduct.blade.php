@@ -1,5 +1,10 @@
-@section('jquery_files')
-    $(".categories").select2();
+@section('js_files')
+    <script type="text/ng-template" id="template-category">
+        <div class="left-panel">
+            <span ng-bind-html="$highlight($getDisplayText())"></span>
+            <span>({%list.name%})</span>
+        </div>
+    </script>
 @append
 
 <div id="new-product-modal" class="modal fade" role="dialog" tabindex="-1" >
@@ -11,8 +16,8 @@
             <form ng-submit="submitProduct()">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
+                        <div class="col-md-4 col-md-offset-1">
+                            <div class="form-group">
                                 <input name="newProduct[name]"
                                        type="text"
                                        class="form-control"
@@ -26,7 +31,9 @@
                                     <option ng-repeat="productName in productsList" value="{% productName.name %}">
                                 </datalist>
                             </div>
-                            <div class="col-md-4 col-md-offset-1">
+                        </div>
+                        <div class="col-md-4 col-md-offset-1">
+                            <div class="form-group">
                                 <input name="newProduct[unit]"
                                        type="text"
                                        class="form-control"
@@ -43,12 +50,15 @@
                         </div>
                         <div class="form-group" ng-if="newProduct.newUnit || newProduct.newStockProduct">
                             <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newStockProduct">
-                                <select name="categories_id" class="categories"
-                                        multiple="multiple"
-                                        ng-options="category as category.name for category in categoryList track by category.id"
-                                        ng-model="categorySelected"
-                                        ng-change="updateCategories()">
-                                </select>
+                                <tags-input ng-model="newProduct.categories">
+                                    <auto-complete source="getCategoryList($query)"
+                                                   min-length="0"
+                                                   load-on-focus="true"
+                                                   load-on-empty="true"
+                                                   max-results-to-show="32"
+                                                   template="template-category">
+                                    </auto-complete>
+                                </tags-input>
                             </div>
                             <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newUnit">
                                 <input name="newProduct[newUnitCode]"

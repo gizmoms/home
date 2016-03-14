@@ -18,12 +18,13 @@ class CategoryController extends Controller {
             $categoryList = array();
             foreach ($categories as $category) {
                 array_push($categoryList, array(
-                    'id'            => $category->id,
-                    'name'          => $category->name
+                    'id'    => $category->id,
+                    'name'  => $category->name
                 ));
             }
+            $categoryList = json_encode($categoryList);
 
-            return response()->json(array('success' => true, 'categoryList' => $categoryList));
+            return response()->json($categoryList);
         } else {
             $message = 'Sie sind nicht eingeloggt';
             return response()->json(array('success' => false, 'message' => $message));

@@ -1,4 +1,4 @@
-var customInterpolationApp = angular.module('customInterpolationApp', ['ngMaterial']);
+var customInterpolationApp = angular.module('customInterpolationApp', ['ngMaterial','ngTagsInput']);
 
 customInterpolationApp.config(function($interpolateProvider, $mdDateLocaleProvider) {
     $interpolateProvider.startSymbol('{%');
@@ -29,8 +29,15 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
 
     $scope.newProduct =  {
         newStockProduct: false,
-        newUnit: false
+        newUnit: false,
+        tags: []
     };
+
+    $scope.tags = [
+        { text: 'Tag1' },
+        { text: 'Tag2' },
+        { text: 'Tag3' }
+    ];
 
     $scope.addItem = function() {
         $scope.id = $scope.id+1;
@@ -75,17 +82,16 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.newShop.countrySelected = $scope.countryList[80];
     });
 
-    $http.get('/getCategories').then(function(categoriesResponse) {
-        if(categoriesResponse.data.success == true){
-            $scope.categoryList = categoriesResponse.data.categoryList;
-            console.log($scope.categoryList);
-        } else {
-            $scope.message = categoriesResponse.data.message;
-        }
-    });
+    $scope.getCategoryList =  function() {
+        $http.get('/getCategories', {cache: true}).then(function(categoriesResponse) {
+            var categories = categoriesResponse.data;
+            console.log(categories);
+            return categories;
+        });
+    }
 
     $scope.getProductDetails = function() {
-        $http.get('/getProductsNames').then(function(productsNamesResponse) {
+         $http.get('/getProductsNames').then(function(productsNamesResponse) {
             $scope.productsNames = productsNamesResponse.data.productsNames;
             $scope.unitList = productsNamesResponse.data.unitList;
             $scope.productsList = productsNamesResponse.data.products;

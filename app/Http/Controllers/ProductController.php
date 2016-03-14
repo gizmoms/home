@@ -9,6 +9,7 @@ use App\Models\ProductDetails;
 use App\Models\Shop;
 use App\Models\Product;
 use App\Models\Unit;
+use App\Models\Category;
 
 class ProductController extends Controller {
     public function getList(Request $request)
@@ -50,6 +51,14 @@ class ProductController extends Controller {
         $user = Auth::user();
         $newProductData = $request->input('newProduct');
         $product = null;
+        foreach($newProductData['categories'] as $newCategory)
+        {
+            $category = Category::where('name', 'like', $newCategory['text'])->get();
+            if((count(get_object_vars($category)) <= 0)){
+                dd('test');
+            }
+            dd($category);
+        }
         if($newProductData['newStockProduct'] == false){
             $product = ProductDetails::where('shop_id', '=', $newProductData['shopId'])
                 ->where('product_id', '=', $newProductData['productId'])

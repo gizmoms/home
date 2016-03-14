@@ -9,8 +9,12 @@
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ng-tags-input.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ng-tags-input.bootstrap.min.css') }}" rel="stylesheet">
     <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
     <link href="{{ asset('/css/angular-material.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrap-material-design.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ripples.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/general.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.circliful.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/includes.css') }}" rel="stylesheet">
@@ -33,22 +37,27 @@
 
 <!-- Scripts -->
 <script src="{{ asset('/js/jquery-1.11.3.min.js') }}"></script>
-<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.smint.js') }}"></script>
 <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.circliful.min.js') }}"></script>
 <script src="{{ asset('/js/custom.jquery.js') }}"></script>
 <!-- Angular Material Dependencies -->
 <script src="{{ asset('/js/angular.min.js') }}"></script>
+<script src="{{ asset('/js/angular-resource.min.js') }}"></script>
 <script src="{{ asset('/js/angular-animate.min.js') }}"></script>
 <script src="{{ asset('/js/angular-aria.min.js') }}"></script>
 <script src="{{ asset('/js/moment.min.js') }}"></script>
+<script src="{{ asset('/js/ng-tags-input.min.js') }}"></script>
+<script src="{{ asset('/js/material.min.js') }}"></script>
+<script src="{{ asset('/js/ripples.min.js') }}"></script>
 <script src="{{ asset('/js/custom.js') }}"></script>
 <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
 <script src="{{ asset('/js/angular-material.min.js') }}"></script>
 @yield('js_files')
 <script>
     $("document").ready(function(){
+        $.material.init();
+
         @yield('jquery_files')
     });
 </script>
