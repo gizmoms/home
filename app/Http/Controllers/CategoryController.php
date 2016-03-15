@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use Carbon\Carbon;
-
 use App\Models\Category;
 
 class CategoryController extends Controller {
@@ -24,7 +22,7 @@ class CategoryController extends Controller {
             }
             $categoryList = json_encode($categoryList);
 
-            return response()->json($categoryList);
+            return response()->json(array('categoryList' => $categoryList));
         } else {
             $message = 'Sie sind nicht eingeloggt';
             return response()->json(array('success' => false, 'message' => $message));

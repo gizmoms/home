@@ -82,13 +82,9 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
         $scope.newShop.countrySelected = $scope.countryList[80];
     });
 
-    $scope.getCategoryList =  function() {
-        $http.get('/getCategories', {cache: true}).then(function(categoriesResponse) {
-            var categories = categoriesResponse.data;
-            console.log(categories);
-            return categories;
-        });
-    }
+    $http.get('/getCategories', {cache: true}).then(function(categoriesResponse) {
+        $scope.categoryList = categoriesResponse.data.categoryList;
+    });
 
     $scope.getProductDetails = function() {
          $http.get('/getProductsNames').then(function(productsNamesResponse) {

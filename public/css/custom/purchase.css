@@ -4,12 +4,12 @@
     background: #e4e4e4;
     color: #333;
 }
-
+/*
 #new-purchase table .form-control {
     background-color: inherit;
     border: none;
 }
-
+*/
 .purchase {
     max-width: 1440px;
     min-height: 600px;

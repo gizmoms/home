@@ -16,8 +16,8 @@
             <form ng-submit="submitProduct()">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-1">
-                            <div class="form-group">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group is-empty">
                                 <input name="newProduct[name]"
                                        type="text"
                                        class="form-control"
@@ -32,7 +32,9 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="col-md-4 col-md-offset-1">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
                             <div class="form-group">
                                 <input name="newProduct[unit]"
                                        type="text"
@@ -48,19 +50,28 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="form-group" ng-if="newProduct.newUnit || newProduct.newStockProduct">
-                            <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newStockProduct">
-                                <tags-input ng-model="newProduct.categories">
-                                    <auto-complete source="getCategoryList($query)"
-                                                   min-length="0"
-                                                   load-on-focus="true"
-                                                   load-on-empty="true"
-                                                   max-results-to-show="32"
-                                                   template="template-category">
-                                    </auto-complete>
-                                </tags-input>
+                    </div>
+                    <div class="row" ng-if="newProduct.newStockProduct">
+                        <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newStockProduct">
+                            <div class="form-group is-empty">
+                                <input name="newProduct[category]"
+                                       type="text"
+                                       class="form-control"
+                                       ng-model="newProduct.category"
+                                       ng-change="checkNewCategory()"
+                                       ng-required="true"
+                                       list="categories"
+                                       placeholder="Kategorie"
+                                       autocomplete="off">
+                                <datalist id="categories">
+                                    <option ng-repeat="category in categoryList" value="{% category.name %}">
+                                </datalist>
                             </div>
-                            <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newUnit">
+                        </div>
+                    </div>
+                    <div class="row" ng-if="newProduct.newUnit">
+                        <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newUnit">
+                            <div class="form-group">
                                 <input name="newProduct[newUnitCode]"
                                        type="string"
                                        class="form-control"
@@ -69,8 +80,10 @@
                                        placeholder="Abkürzung Einheit">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-1">
+                            <div class="form-group">
                                 <input name="newProduct[singlePrice]"
                                        type="number"
                                        step="0.01"

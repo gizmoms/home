@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+<nav class="navbar navbar-grey navbar-fixed-top topnav" role="navigation">
     <div class="container topnav">
         <div class="navbar-header a-center">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-home" aria-expanded="false">

@@ -13,10 +13,9 @@ body {
     color: #ededed;
 }
 
-body, h1, h2, h3, h4, h5, h6,
-p, span, input, div {
-    font-family: 'Calibri', serif;
-    font-size: 16pt;
+body, p, span, input, div {
+    font-family: 'Roboto';
+    font-size: 12pt;
     font-weight: 200;
     letter-spacing: 0.7px;
     word-spacing: 1.2px;
@@ -24,16 +23,23 @@ p, span, input, div {
 }
 
 h1 {
-    font-size: 1.5em;
+    font-size: 34pt;
+}
+
+h2 {
+    font-size: 20pt;
 }
 
 h3 {
-    font-size: 1.2em;
-    color: #999999;
+    font-size: 16pt;
 }
 
 h3 i {
     font-size: 0.8em;
+}
+
+h4 {
+    font-size: 14pt;
 }
 
 .font-big {
@@ -68,10 +74,6 @@ h3 i {
     text-align: center;
 }
 
-input {
-    color: #333;
-}
-
 footer {
     min-height: 300px;
 }
@@ -94,10 +96,6 @@ section {
 
 #login .modal-body .row {
     padding: 10px 0;
-}
-
-.modal {
-    color: #333;
 }
 
 .form-group {
@@ -138,8 +136,3 @@ section {
 .modal-dialog.modal-login .modal-footer {
     border-top: none;
 }
-
-@import "custom/colors.css";
-@import "custom/bootstrap-fixes.css";
-@import "custom/home.css";
-@import "custom/purchase.css";
