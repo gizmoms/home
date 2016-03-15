@@ -1,4 +1,4 @@
-var customInterpolationApp = angular.module('customInterpolationApp', ['ngMaterial','ngTagsInput']);
+var customInterpolationApp = angular.module('customInterpolationApp', ['ngMaterial']);
 
 customInterpolationApp.config(function($interpolateProvider, $mdDateLocaleProvider) {
     $interpolateProvider.startSymbol('{%');

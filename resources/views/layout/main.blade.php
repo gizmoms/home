@@ -11,8 +11,6 @@
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/ng-tags-input.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/ng-tags-input.bootstrap.min.css') }}" rel="stylesheet">
     <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
     <link href="{{ asset('/css/angular-material.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-material-design.min.css') }}" rel="stylesheet">
@@ -49,7 +47,6 @@
 <script src="{{ asset('/js/angular-animate.min.js') }}"></script>
 <script src="{{ asset('/js/angular-aria.min.js') }}"></script>
 <script src="{{ asset('/js/moment.min.js') }}"></script>
-<script src="{{ asset('/js/ng-tags-input.min.js') }}"></script>
 <script src="{{ asset('/js/material.min.js') }}"></script>
 <script src="{{ asset('/js/ripples.min.js') }}"></script>
 <script src="{{ asset('/js/custom.js') }}"></script>
