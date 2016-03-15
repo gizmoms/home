@@ -42,6 +42,10 @@ h4 {
     font-size: 14pt;
 }
 
+input {
+    padding: 7px 10px;
+}
+
 .font-big {
     font-size: 1.5em;
 }
@@ -98,10 +102,6 @@ section {
     padding: 10px 0;
 }
 
-.form-group {
-    padding: 18px 0;
-}
-
 .heading {
     margin-bottom: 50px;
 }
@@ -122,11 +122,11 @@ section {
 }
 
 .icon-body:hover i{
-    color: #678CE0;
+    color: #0288D1;
 }
 
 .icon:hover {
-    color: #678CE0;
+    color: #0288D1;
 }
 
 .modal-dialog.modal-login {

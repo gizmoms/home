@@ -14,7 +14,7 @@ customInterpolationApp.config(function($interpolateProvider, $mdDateLocaleProvid
 });
 
 
-customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
+customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdConstant) {
     $scope.id = 0;
 
     $scope.invoice = {
@@ -30,14 +30,13 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
     $scope.newProduct =  {
         newStockProduct: false,
         newUnit: false,
+        category: '',
         tags: []
     };
 
-    $scope.tags = [
-        { text: 'Tag1' },
-        { text: 'Tag2' },
-        { text: 'Tag3' }
-    ];
+    $scope.tags = [];
+
+    this.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
 
     $scope.addItem = function() {
         $scope.id = $scope.id+1;
@@ -166,6 +165,15 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http) {
             $scope.newProduct.newStockProduct = false;
             $scope.updateNewProductUnit();
             $scope.newProduct.productId = result[0].id;
+        }
+    };
+
+    $scope.checkNewCategory = function() {
+        var result = $.grep($scope.categoryList, function(e){ return e.name == $scope.newProduct.category; });
+        if(result.length <= 0) {
+            $scope.newProduct.newCategory = true;
+        } else {
+            $scope.newProduct.newCategory = false;
         }
     };
 

@@ -64,6 +64,7 @@ class CreateShoppinglistTables extends Migration
             $table->increments('id');
             $table->string('name', 100)->index();
             $table->integer('unit_id')->unsigned();
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');

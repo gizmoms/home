@@ -20,7 +20,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Unit', 'unit_id');
     }
 
-    public function categories()
+    public function category()
     {
         return $this->belongsToMany('App\Models\Category', 'product_category');
     }

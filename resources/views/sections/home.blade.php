@@ -10,8 +10,8 @@
                     {!! Form::open(array('url' => 'http://www.google.com/search', 'method' => 'get', 'class' => 'form-horizontal')) !!}
                         <div class="input-group">
                             {!! Form::text('q', '', ['class' => 'frm', 'id' => 'g-search', 'maxlength' => '255', 'placeholder' => 'Google Suche']) !!}
-                            <span class="input-group-btn input-group-btn-tit">
-                                <button type="submit" class="btn grey-bg">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default grey-bg">
                                     <span class="glyphicon glyphicon-search white" title="abschicken"></span>
                                 </button>
                             </span>

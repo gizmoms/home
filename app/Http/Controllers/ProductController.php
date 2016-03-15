@@ -51,14 +51,7 @@ class ProductController extends Controller {
         $user = Auth::user();
         $newProductData = $request->input('newProduct');
         $product = null;
-        foreach($newProductData['categories'] as $newCategory)
-        {
-            $category = Category::where('name', 'like', $newCategory['text'])->get();
-            if((count(get_object_vars($category)) <= 0)){
-                dd('test');
-            }
-            dd($category);
-        }
+
         if($newProductData['newStockProduct'] == false){
             $product = ProductDetails::where('shop_id', '=', $newProductData['shopId'])
                 ->where('product_id', '=', $newProductData['productId'])
@@ -66,6 +59,18 @@ class ProductController extends Controller {
         }
 
         if($user && $product === null) {
+
+            $category = Category::where('name', 'like', $newProductData['category'])->get();
+            $stockProduct = Product::where('name', 'like', $newProductData['name'])->get();
+
+            dd($category);
+
+            if(count(get_object_vars($category)) <= 0) {
+                $category = Category::firstOrCreate([
+                    'name' => $newProductData['category']
+                ]);
+            }
+
             if($newProductData['newUnit'] == true){
                 $newUnit = Unit::firstOrCreate([
                     'name' => $newProductData['unit'],
@@ -73,14 +78,14 @@ class ProductController extends Controller {
                 ]);
             }
 
-            if($newProductData['newStockProduct']) {
+            if(count(get_object_vars($stockProduct)) <= 0) {
                 $newStockProduct = Product::firstOrCreate([
-                    'name'      => $newProductData['name'],
-                    'unit_id'   => ($newProductData['newUnit'] == true) ? $newUnit->id : $newProductData['unitId']
+                    'name'          => $newProductData['name'],
+                    'unit_id'       => ($newProductData['newUnit'] == true) ? $newUnit->id : $newProductData['unitId'],
+                    'category_id'   => $category->id
                 ]);
             } else {
                 $stockProduct           = Product::find($newProductData['productId']);
-                dd($newProductData['productId']);
                 $stockProduct->unitName = $stockProduct->unit->name;
             }
 

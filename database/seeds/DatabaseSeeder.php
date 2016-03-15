@@ -95,11 +95,15 @@ class CategoryTableSeeder extends Seeder
         ]);
 
         Category::firstOrCreate([
-            'name' => 'Haushaltsmittel'
+            'name' => 'Haushaltswaren'
         ]);
 
         Category::firstOrCreate([
             'name' => 'Sonstiges'
+        ]);
+
+        Category::firstOrCreate([
+            'name' => 'Körperpflege'
         ]);
     }
 }
@@ -865,9 +869,14 @@ class ShopTableSeeder extends Seeder
 class ProductTableSeeder extends Seeder
 {
     public function run(){
+        $nahrungsmittel = Category::where('name', '=', 'Nahrungsmittel')->first();
+        $haushaltswaren = Category::where('name', '=', 'Haushaltswaren')->first();
+        $koerperpflege  = Category::where('name', '=', 'Körperpflege')->first();
+
         $product1 = Product::firstOrCreate([
             'name'  => 'Fanta Orange 1,5l',
-            'unit_id'   => '2'
+            'unit_id'   => '2',
+            'category_id' => $nahrungsmittel->id
         ]);
 
         ProductDetails::firstOrCreate([
@@ -878,7 +887,8 @@ class ProductTableSeeder extends Seeder
 
         $product2 = Product::firstOrCreate([
             'name'  => 'Coca-Cola 1,25l',
-            'unit_id'   => '2'
+            'unit_id'   => '2',
+            'category_id' => $nahrungsmittel->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
@@ -888,7 +898,8 @@ class ProductTableSeeder extends Seeder
 
         $product3 = Product::firstOrCreate([
             'name'  => 'Glashäger Vital 1l',
-            'unit_id'   => '2'
+            'unit_id'   => '2',
+            'category_id' => $nahrungsmittel->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
@@ -898,17 +909,19 @@ class ProductTableSeeder extends Seeder
 
         $product4 = Product::firstOrCreate([
             'name'  => 'G&G Eistee 1,5l',
-            'unit_id'   => '2'
+            'unit_id'   => '2',
+            'category_id' => $nahrungsmittel->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product4->id,
-            'single_price'  => ''
+            'single_price'  => '',
         ]);
 
         $product5 = Product::firstOrCreate([
             'name'  => 'Regina Taschentücher',
-            'unit_id'   => '3'
+            'unit_id'   => '3',
+            'category_id' => $haushaltswaren->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
@@ -918,7 +931,8 @@ class ProductTableSeeder extends Seeder
 
         $product6 = Product::firstOrCreate([
             'name'  => 'Dr. Oetker Tradizionale Pizza',
-            'unit_id'   => '4'
+            'unit_id'   => '4',
+            'category_id' => $nahrungsmittel->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
@@ -928,7 +942,8 @@ class ProductTableSeeder extends Seeder
 
         $product7 = Product::firstOrCreate([
             'name'  => 'Jever Pils 6x0,33l',
-            'unit_id'   => '3'
+            'unit_id'   => '3',
+            'category_id' => $nahrungsmittel->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
@@ -938,7 +953,8 @@ class ProductTableSeeder extends Seeder
 
         $product8 = Product::firstOrCreate([
             'name'  => 'Fa Duschgel',
-            'unit_id'   => '4'
+            'unit_id'   => '4',
+            'category_id' => $koerperpflege->id
         ]);
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',

@@ -13,24 +13,20 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" name="name" placeholder="Nutzername">
-                                </div>
+                                <input type="text" class="form-control" name="name" placeholder="Nutzername">
                             </div>
-
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="password" class="form-control" name="password" placeholder="Passwort">
-                                </div>
+                                <input type="password" class="form-control" name="password" placeholder="Passwort">
                             </div>
-
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember"> An mich erinnern
-                                        </label>
-                                    </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember">
+                                        <span class="checkbox-material">
+                                            <span class="check"></span>
+                                        </span>
+                                        An mich erinnern
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                    {!! Form::submit('Login', array('class' => 'btn btn-primary')) !!}
+                    <button type="submit" class="btn btn-primary" >Einloggen</button>
                 </div>
                 {!! Form::close() !!}
             </div>

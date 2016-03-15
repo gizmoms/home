@@ -22,6 +22,7 @@
                                        type="text"
                                        class="form-control"
                                        ng-model="newProduct.name"
+                                       ng-keyup="checkNewStockProduct()"
                                        ng-change="checkNewStockProduct()"
                                        ng-required="true"
                                        list="productsNames"
@@ -52,7 +53,7 @@
                         </div>
                     </div>
                     <div class="row" ng-if="newProduct.newStockProduct">
-                        <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newStockProduct">
+                        <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newStockProduct">
                             <div class="form-group is-empty">
                                 <input name="newProduct[category]"
                                        type="text"
@@ -70,7 +71,7 @@
                         </div>
                     </div>
                     <div class="row" ng-if="newProduct.newUnit">
-                        <div class="col-md-4 col-md-offset-1" ng-if="newProduct.newUnit">
+                        <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newUnit">
                             <div class="form-group">
                                 <input name="newProduct[newUnitCode]"
                                        type="string"
@@ -82,13 +83,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-1">
+                        <div class="col-md-10 col-md-offset-1">
                             <div class="form-group">
                                 <input name="newProduct[singlePrice]"
                                        type="number"
                                        step="0.01"
                                        min="0"
-                                       class="form-control"
+                                       class="form-control a-right"
                                        ng-model="newProduct.singlePrice"
                                        ng-required="true"
                                        placeholder="Einzelpreis">
@@ -97,7 +98,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {!! Form::submit('Speichern', array('class' => 'btn btn-primary right')) !!}
+                    <button type="submit" class="btn btn-primary right">Speichern</button>
                     <button type="button" class="btn btn-default right" data-dismiss="modal">Abbrechen</button>
                 </div>
             </form>

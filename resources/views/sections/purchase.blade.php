@@ -31,7 +31,7 @@
                                     <form ng-submit="submit()">
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <select name="shop_id" id="shops" class="form-control"
                                                             ng-options="shop as shop.name for shop in shopList track by shop.id"
                                                             ng-model="shopSelected"
@@ -39,8 +39,19 @@
                                                         <option value="">Wähle einen Laden</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4 col-sm-offset-3">
+                                                <div class="col-md-4 col-sm-offset-2">
                                                     <md-datepicker ng-model="bought_at" ng-required md-placeholder="Datum" ></md-datepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <h5 class="md-title">Tags hinzufügen (Enter zum Übernehmen)</h5>
+                                                    <md-chips
+                                                            ng-model="tags"
+                                                            md-separator-keys="PurchaseForm.keys"
+                                                            placeholder="Tags eintragen"></md-chips>
                                                 </div>
                                             </div>
                                         </div>
