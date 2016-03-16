@@ -22,7 +22,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsToMany('App\Models\Category', 'product_category');
+        return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
     public function purchasings()

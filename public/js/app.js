@@ -1,3 +1,4 @@
+'use strict';
 var customInterpolationApp = angular.module('customInterpolationApp', ['ngMaterial']);
 
 customInterpolationApp.config(function($interpolateProvider, $mdDateLocaleProvider) {
@@ -17,8 +18,9 @@ customInterpolationApp.config(function($interpolateProvider, $mdDateLocaleProvid
 customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdConstant) {
     $scope.id = 0;
 
-    $scope.invoice = {
-        items: []
+    $scope.newPurchase = {
+        items: [],
+        tags: []
     };
 
     $scope.products = {
@@ -30,17 +32,16 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
     $scope.newProduct =  {
         newStockProduct: false,
         newUnit: false,
-        category: '',
-        tags: []
+        newCategory: false,
+        category: ''
     };
 
-    $scope.tags = [];
-
-    this.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
+    var spacebar = 32;
+    $scope.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA, spacebar];
 
     $scope.addItem = function() {
         $scope.id = $scope.id+1;
-        $scope.invoice.items.push({
+        $scope.newPurchase.items.push({
             id: $scope.id,
             qty: 1,
             single_price: $scope.products.items.single_price,
@@ -52,16 +53,16 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
     };
 
     $scope.removeItem = function(index) {
-        $scope.invoice.items.splice(index, 1);
+        $scope.newPurchase.items.splice(index, 1);
         $scope.id = $scope.id-1;
-        for(var i=index;i<=$scope.invoice.items.length;i++) {
-            $scope.invoice.items[i].id -= 1;
+        for(var i=index;i<=$scope.newPurchase.items.length;i++) {
+            $scope.newPurchase.items[i].id -= 1;
         }
     };
 
     $scope.total = function() {
         var total = 0;
-        angular.forEach($scope.invoice.items, function(item) {
+        angular.forEach($scope.newPurchase.items, function(item) {
             total += item.qty * item.single_price;
         });
         return total;
@@ -73,7 +74,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
             id: 'newShop',
             name: 'neuen Markt hinzufügen'
         });
-        $scope.shopSelected = "";
+        $scope.newPurchase.shopSelected = "";
     });
 
     $http.get('/getCountries').then(function(countriesResponse) {
@@ -90,18 +91,19 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
             $scope.productsNames = productsNamesResponse.data.productsNames;
             $scope.unitList = productsNamesResponse.data.unitList;
             $scope.productsList = productsNamesResponse.data.products;
+             console.log($scope.productsList);
         });
     }
 
     $scope.updateProducts = function() {
-        if($scope.shopSelected.id == 'newShop')
+        if($scope.newPurchase.shopSelected.id == 'newShop')
         {
             $("#new-shop-modal").modal();
         } else {
             $http({
                 url: '/getProducts',
                 method: "POST",
-                data: { 'shopId' : $scope.shopSelected.id }
+                data: { 'shopId' : $scope.newPurchase.shopSelected.id }
             }).then(
                 function(productsResponse) {
                     $scope.productList = productsResponse.data.productList;
@@ -121,7 +123,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
                             single_price: product.single_price
                         });
                     });
-                    angular.forEach($scope.invoice.items, function(item) {
+                    angular.forEach($scope.newPurchase.items, function(item) {
                         item.productList = $scope.products;
                         item.productFirstSelect = $scope.productData;
                     });
@@ -133,7 +135,6 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
 
     $scope.updateSinglePrice = function(item, selected) {
         item.single_price = selected.single_price;
-        console.log(selected);
         if(selected.id == 'newProduct')
         {
             $scope.getProductDetails();
@@ -143,9 +144,19 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
 
     $scope.updateNewProductUnit = function() {
         if($scope.newProduct.newStockProduct == false) {
-            var result = $.grep($scope.productList, function(e){ return e.name == $scope.newProduct.name; });
-            $scope.newProduct.unit = result[0].unit;
+            console.log($scope.productsList);
+            var result = $.grep($scope.productsList, function(e){ return e.name == $scope.newProduct.name; });
+            $scope.newProduct.unit = result[0].unit.name;
             $scope.newProduct.newUnit = false;
+        }
+    };
+
+    $scope.updateCategory = function(){
+        if($scope.newProduct.newCategory == false) {
+            var result = $.grep($scope.productsList, function(e){ return e.name == $scope.newProduct.name;});
+            console.log('###');
+            console.log(result);
+            $scope.newProduct.category = result[0].category.name;
         }
     };
 
@@ -158,12 +169,13 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
     };
 
     $scope.checkNewStockProduct = function() {
-        var result = $.grep($scope.productList, function(e){ return e.name == $scope.newProduct.name; });
+        var result = $.grep($scope.productsList, function(e){ return e.name == $scope.newProduct.name; });
         if(result.length <= 0) {
             $scope.newProduct.newStockProduct = true;
         } else {
             $scope.newProduct.newStockProduct = false;
             $scope.updateNewProductUnit();
+            $scope.updateCategory();
             $scope.newProduct.productId = result[0].id;
         }
     };
@@ -177,14 +189,16 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
         }
     };
 
-    $scope.submit = function(){
+    $scope.submitPurchase = function(){
+        console.log($scope.newPurchase);
+        /*
         $http({
             url: '/savePurchase',
             method: "POST",
-            data: { 'shopId' : $scope.shopSelected.id, 'products' : $scope.invoice.items, 'date' : $scope.bought_at }
+            data: { 'shopId' : $scope.newPurchase.shopSelected.id, 'products' : $scope.newPurchase.items, 'date' : $scope.bought_at }
         }).then(
             $scope.purchaseMessage = 'Speichern erfolgreich'
-        )
+        )*/
     };
 
     $scope.submitShop = function() {
@@ -201,7 +215,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
     };
 
     $scope.submitProduct = function() {
-        $scope.newProduct.shopId = $scope.shopSelected.id;
+        $scope.newProduct.shopId = $scope.newPurchase.shopSelected.id;
         console.log($scope.newProduct);
         if($scope.newProduct.newUnit == false) {
             var unitIndex = $scope.unitList.indexOf($scope.newProduct.unit);
@@ -216,7 +230,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
                 if(newProductResponse.data.success == true){
                     $("#new-product-modal").modal('hide');
                     $scope.purchaseMessage = newProductResponse.data.message
-                    var item = $scope.invoice.items[$scope.invoice.items.length -1];
+                    var item = $scope.newPurchase.items[$scope.newPurchase.items.length -1];
                     item.productList = newProductResponse.data.productList
                     item.productFirstSelect = {
                         availableOptions: newProductResponse.data.productList,

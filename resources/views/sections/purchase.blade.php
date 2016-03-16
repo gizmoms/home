@@ -16,7 +16,6 @@
             <div class="heading">
                 <h1><a><i class="fa fa-arrow-left icon icon-small" title="vorheriger Monat"></i></a> März <i class="glyphicon glyphicon-cog icon icon-small" title="bearbeiten"></i></h1>
             </div>
-
             <div class="purchase-content">
                 <div class="row">
                     <div class="col-sm-12">
@@ -28,34 +27,40 @@
                         <div class="row" id="new-purchase">
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="new"  >
-                                    <form ng-submit="submit()">
+                                    <form ng-submit="submitPurchase()">
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-md-6">
                                                     <select name="shop_id" id="shops" class="form-control"
                                                             ng-options="shop as shop.name for shop in shopList track by shop.id"
-                                                            ng-model="shopSelected"
+                                                            ng-model="newPurchase.shopSelected"
                                                             ng-change="updateProducts()">
                                                         <option value="">Wähle einen Laden</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-offset-2">
-                                                    <md-datepicker ng-model="bought_at" ng-required md-placeholder="Datum" ></md-datepicker>
+                                                    <md-datepicker ng-model="newPurchase.bought_at" ng-required md-placeholder="Datum" ></md-datepicker>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                    <h5 class="md-title">Tags hinzufügen (Enter zum Übernehmen)</h5>
+                                                    <h5>Füge Tags hinzu</h5>
                                                     <md-chips
-                                                            ng-model="tags"
-                                                            md-separator-keys="PurchaseForm.keys"
-                                                            placeholder="Tags eintragen"></md-chips>
+                                                              ng-model="newPurchase.tags"
+                                                              md-separator-keys="keys"
+                                                              filter-selected="true">
+                                                        <input type="text" placeholder="Tags eintragen">
+                                                    </md-chips>
+                                                    <datalist id="tags">
+                                                        <option ng-repeat="category in categoryList" value="{% category.name %}">
+                                                        <option value="test">test</option>
+                                                    </datalist>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" ng-if="shopSelected && shopSelected.id != 'newShop'">
+                                        <div class="row" ng-if="newPurchase.shopSelected && newPurchase.shopSelected.id != 'newShop'">
                                             <div class="col-sm-12">
                                                 <div class="product-table">
                                                     <table>
@@ -70,7 +75,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="item in invoice.items">
+                                                            <tr ng-repeat="item in newPurchase.items">
                                                                 <td>{% item.id %}</td>
                                                                 <td>
                                                                     <select name="products[{%item.id%}][product]"
@@ -112,7 +117,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-6">
                                                 <div class="footer">
-                                                    {!! Form::submit('Speichern', array('class' => 'btn btn-primary right')) !!}
+                                                    <button type="submit" class="btn btn-primary right">Speichern</button>
                                                     <button type="button" id="new-purchase-close" class="btn btn-default right" data-dismiss="form" data-target="new-purchase" data-icon="new-purchase-slide">Abbrechen</button>
                                                 </div>
                                             </div>

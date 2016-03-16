@@ -75,16 +75,6 @@ class CreateShoppinglistTables extends Migration
          * Kreuztabellen
          *
          */
-        Schema::create('product_category', function (Blueprint $table) {
-            $table->integer('product_id')->unsigned()->index();
-            $table->integer('category_id')->unsigned()->index();
-
-            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['product_id', 'category_id']);
-        });
-
         Schema::create('purchase_product', function (Blueprint $table) {
             $table->integer('purchase_id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();

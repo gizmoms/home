@@ -13,6 +13,7 @@
     <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
     <link href="{{ asset('/css/angular-material.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/angular-material.layouts.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-material-design.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ripples.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/general.css') }}" rel="stylesheet">

@@ -35,6 +35,7 @@ class ProductController extends Controller {
             $unitList = Unit::lists('name');
             foreach($products as $product) {
                 $product->unitName = $product->unit->name;
+                $product->categoryName = $product->category->name;
             }
             return response()->json(array(
                 'success'       => 'true',
@@ -62,8 +63,6 @@ class ProductController extends Controller {
 
             $category = Category::where('name', 'like', $newProductData['category'])->get();
             $stockProduct = Product::where('name', 'like', $newProductData['name'])->get();
-
-            dd($category);
 
             if(count(get_object_vars($category)) <= 0) {
                 $category = Category::firstOrCreate([
