@@ -8,29 +8,26 @@
             <form ng-submit="submitShop()">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group">
                                 <input name="newShop[name]" type="text" class="form-control" ng-model="newShop.name" ng-required placeholder="Name">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
-                                <input name="newShop[street]" type="text" class="form-control" ng-model="newShop.street" ng-required placeholder="Straße">
-                            </div>
-                            <div class="col-md-4 col-md-offset-1">
-                                <input name="newShop[streetnumber]" type="text" class="form-control" ng-model="newShop.streetnumber" ng-required placeholder="Straßennummer">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
-                                <input name="newShop[city]" type="text" class="form-control" ng-model="newShop.city" ng-required placeholder="Ort">
-                            </div>
-                            <div class="col-md-4 col-md-offset-1">
-                                <input name="newShop[zip]" type="text" class="form-control" ng-model="newShop.zip" ng-required placeholder="PLZ">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group">
+                                <input name="newShop[city]"
+                                       type="text"
+                                       class="form-control"
+                                       list="cities"
+                                       ng-model="newShop.city"
+                                       ng-required placeholder="Ort">
+                                <datalist id="cities">
+                                    <option ng-repeat="city in cityList" value="{% city.name %}">
+                                </datalist>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-1">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group">
                                 <select name="newShop[country_id]" id="countries" class="form-control"
                                         ng-options="country as country.name for country in countryList track by country.id"
                                         ng-model="newShop.countrySelected">
