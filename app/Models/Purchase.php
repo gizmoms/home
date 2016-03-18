@@ -24,4 +24,9 @@ class Purchase extends Model
     {
         return $this->belongsToMany('App\Models\Product', 'purchase_product');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag', 'purchase_tags', 'purchase_id', 'tag_id');
+    }
 }

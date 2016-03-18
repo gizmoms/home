@@ -29,7 +29,7 @@ class CreateShoppinglistTables extends Migration
             $table->increments('id');
             $table->string('name')->index();
             $table->string('code', 10)->index();
-            $table->integer('single_amount');
+            $table->double('single_amount');
             $table->timestamps();
         });
 
@@ -70,21 +70,19 @@ class CreateShoppinglistTables extends Migration
             $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
         });
 
+        Schema::create('tags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 25);
+            $table->timestamps();
+        });
 
         /**
          * Kreuztabellen
          *
          */
-        Schema::create('purchase_product', function (Blueprint $table) {
+        Schema::create('purchase_tags', function (Blueprint $table) {
+            $table->integer('tag_id')->unsigned()->index();
             $table->integer('purchase_id')->unsigned()->index();
-            $table->integer('product_id')->unsigned()->index();
-            $table->integer('amount');
-            $table->double('single_price');
-
-            $table->foreign('purchase_id')->references('id')->on('purchasings')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['purchase_id', 'product_id']);
         });
 
         Schema::create('product_details', function (Blueprint $table) {
@@ -97,12 +95,22 @@ class CreateShoppinglistTables extends Migration
 
             $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
-
-            //$table->primary(['id', 'shop_id', 'product_id']);
         });
 
         DB::statement("ALTER TABLE product_details ADD PRIMARY KEY (shop_id, product_id);");
         DB::statement("ALTER TABLE product_details MODIFY id int(10) AUTO_INCREMENT;");
+
+        Schema::create('purchase_product', function (Blueprint $table) {
+            $table->integer('purchase_id')->unsigned()->index();
+            $table->integer('product_id')->unsigned()->index();
+            $table->integer('amount');
+            $table->double('single_price');
+            $table->timestamps();
+
+            $table->foreign('purchase_id')->references('id')->on('purchasings')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->primary(['purchase_id', 'product_id']);
+        });
     }
 
     /**

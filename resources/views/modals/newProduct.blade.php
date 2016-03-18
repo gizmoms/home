@@ -52,6 +52,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row" ng-if="newProduct.newUnit">
+                        <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newUnit">
+                            <div class="form-group">
+                                <input name="newProduct[newUnitCode]"
+                                       type="string"
+                                       class="form-control"
+                                       ng-model="newProduct.newUnitCode"
+                                       ng-required="{% newProduct.newUnit %}"
+                                       placeholder="Abkürzung Einheit">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="newProduct.newUnit">
+                        <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newUnit">
+                            <div class="form-group">
+                                <input name="newProduct[newUnitStep]"
+                                       type="number"
+                                       step="0.001"
+                                       class="form-control"
+                                       ng-model="newProduct.newUnitCode"
+                                       ng-required="{% newProduct.newUnit %}"
+                                       placeholder="Einheitsmenge (z.B. 0,001 für Kg">
+                            </div>
+                        </div>
+                    </div>
                     <div class="row" ng-if="newProduct.newStockProduct">
                         <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newStockProduct">
                             <div class="form-group is-empty">
@@ -67,18 +92,6 @@
                                 <datalist id="categories">
                                     <option ng-repeat="category in categoryList" value="{% category.name %}">
                                 </datalist>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" ng-if="newProduct.newUnit">
-                        <div class="col-md-10 col-md-offset-1" ng-if="newProduct.newUnit">
-                            <div class="form-group">
-                                <input name="newProduct[newUnitCode]"
-                                       type="string"
-                                       class="form-control"
-                                       ng-model="newProduct.newUnitCode"
-                                       ng-required="{% newProduct.newUnit %}"
-                                       placeholder="Abkürzung Einheit">
                             </div>
                         </div>
                     </div>

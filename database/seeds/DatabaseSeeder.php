@@ -66,23 +66,27 @@ class UnitTableSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         Unit::firstOrCreate([
-            'name' => 'Kilogramm',
-            'code' => 'kg'
+            'name'          => 'Kilogramm',
+            'code'          => 'kg',
+            'single_amount' => '0.001'
         ]);
 
         Unit::firstOrCreate([
-            'name' => 'Liter',
-            'code' => 'l'
+            'name'          => 'Liter',
+            'code'          => 'l',
+            'single_amount' => '0.1'
         ]);
 
         Unit::firstOrCreate([
-            'name' => 'Packung',
-            'code' => 'pg'
+            'name'          => 'Packung',
+            'code'          => 'pg',
+            'single_amount' => '1'
         ]);
 
         Unit::firstOrCreate([
-            'name' => 'Stück',
-            'code' => 'stk'
+            'name'          => 'Stück',
+            'code'          => 'stk',
+            'single_amount' => '1'
         ]);
     }
 }
@@ -882,7 +886,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product1->id,
-            'single_price'  => ''
+            'single_price'  => '0,95'
         ]);
 
         $product2 = Product::firstOrCreate([
@@ -893,7 +897,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product2->id,
-            'single_price'  => ''
+            'single_price'  => '0,89'
         ]);
 
         $product3 = Product::firstOrCreate([
@@ -904,7 +908,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product3->id,
-            'single_price'  => ''
+            'single_price'  => '0,89'
         ]);
 
         $product4 = Product::firstOrCreate([
@@ -915,7 +919,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product4->id,
-            'single_price'  => '',
+            'single_price'  => '0,49',
         ]);
 
         $product5 = Product::firstOrCreate([
@@ -926,7 +930,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product5->id,
-            'single_price'  => ''
+            'single_price'  => '1,79'
         ]);
 
         $product6 = Product::firstOrCreate([
@@ -937,18 +941,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product6->id,
-            'single_price'  => ''
-        ]);
-
-        $product7 = Product::firstOrCreate([
-            'name'  => 'Jever Pils 6x0,33l',
-            'unit_id'   => '3',
-            'category_id' => $nahrungsmittel->id
-        ]);
-        ProductDetails::firstOrCreate([
-            'shop_id'   => '1',
-            'product_id' => $product7->id,
-            'single_price'  => ''
+            'single_price'  => '1,88'
         ]);
 
         $product8 = Product::firstOrCreate([
@@ -959,7 +952,7 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product8->id,
-            'single_price'  => ''
+            'single_price'  => '0,77'
         ]);
     }
 }

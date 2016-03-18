@@ -59,7 +59,7 @@ class ProductController extends Controller {
                 ->first();
         }
 
-        if($user && $product === null) {
+        if($user && $product == null) {
 
             $category = Category::where('name', 'like', $newProductData['category'])->get();
             $stockProduct = Product::where('name', 'like', $newProductData['name'])->get();
@@ -73,7 +73,8 @@ class ProductController extends Controller {
             if($newProductData['newUnit'] == true){
                 $newUnit = Unit::firstOrCreate([
                     'name' => $newProductData['unit'],
-                    'code' => $newProductData['newUnitCode']
+                    'code' => $newProductData['newUnitCode'],
+                    'single_amount' => $newProductData['newUnitStep']
                 ]);
             }
 
@@ -121,7 +122,9 @@ class ProductController extends Controller {
                 'id'            => $product->id,
                 'name'          => $product->product->name,
                 'unit'          => $product->product->unit->name,
-                'single_price'  => $product->single_price));
+                'single_price'  => $product->single_price,
+                'single_amount' => $product->product->unit->single_amount
+            ));
         }
         return $productList;
     }

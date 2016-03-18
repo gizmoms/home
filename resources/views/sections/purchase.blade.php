@@ -46,17 +46,18 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                    <h5>Füge Tags hinzu</h5>
+                                                    <label for="tags"><span class="glyphicons glyphicons-tags" aria-hidden="true"></span></label>
                                                     <md-chips
                                                               ng-model="newPurchase.tags"
                                                               md-separator-keys="keys"
-                                                              filter-selected="true">
-                                                        <input type="text" placeholder="Tags eintragen">
+                                                              filter-selected="true"
+                                                              md-max-chips="5">
+                                                        <md-chip-template>
+                                                            <span>#</span>
+                                                            <span>{% $chip %}</span>
+                                                        </md-chip-template>
+                                                        <input id="tags" type="text" placeholder="Tags eintragen">
                                                     </md-chips>
-                                                    <datalist id="tags">
-                                                        <option ng-repeat="category in categoryList" value="{% category.name %}">
-                                                        <option value="test">test</option>
-                                                    </datalist>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,12 +83,12 @@
                                                                             class="form-control add-product"
                                                                             ng-model="item.productList"
                                                                             ng-options="product as product.name for product in item.productFirstSelect.availableOptions track by product.id"
-                                                                            ng-change="updateSinglePrice(item, item.productList)"
+                                                                            ng-change="updateItem(item, item.productList)"
                                                                             required>
                                                                         <option value="">Produkt wählen</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input name="products[{%item.id%}][menge]" type="number" class="form-control" ng-model="item.qty" ng-required></td>
+                                                                <td><input name="products[{%item.id%}][menge]" type="number" step="{% item.step %}" min="0" class="form-control" ng-model="item.qty" ng-required></td>
                                                                 <td><input name="products[{%item.id%}][single_price]" type="number" step="0.01" min="0" class="form-control" ng-model="item.single_price"  ng-required ></td>
                                                                 <td name="products[{%item.id%}][gesamtpreis]" class="a-right" ng-model="item.cost">{%item.qty * item.single_price | currency:"€ "%}</td>
                                                                 <td>
@@ -115,9 +116,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6 col-sm-offset-6">
+                                            <div class="col-sm-8 col-sm-offset-4">
                                                 <div class="footer">
-                                                    <button type="submit" class="btn btn-primary right">Speichern</button>
+                                                    <button type="submit" class="btn btn-primary right" ng-if="newPurchase.items.length > 0">Speichern</button>
                                                     <button type="button" id="new-purchase-close" class="btn btn-default right" data-dismiss="form" data-target="new-purchase" data-icon="new-purchase-slide">Abbrechen</button>
                                                 </div>
                                             </div>

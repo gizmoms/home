@@ -1,27 +1,35 @@
 <?php namespace App\Http\Controllers;
 
-use Faker\Provider\es_AR\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-
-use Carbon\Carbon;
 
 use App\Models\Shop;
 use App\Models\Country;
+use App\Models\Address;
 
 class ShopController extends Controller {
+
+    private function getShopList()
+    {
+        $shops = Shop::get();
+        $shopList = array();
+        foreach ($shops as $shop) {
+            array_push($shopList, array(
+                'id' => $shop->id,
+                'name' => $shop->name));
+        }
+        return $shopList;
+    }
+
     public function getList()
     {
         $user = Auth::user();
 
         if($user){
-            $shops = Shop::get();
-            $shopList = array();
-            foreach ($shops as $shop) {
-                array_push($shopList, array('id' => $shop->id, 'name' => $shop->name));
-            }
-            return response()->json(array('success' => true, 'shopList' => $shopList));
+            $shopList = $this::getShopList();
+            return response()->json(array(
+                'success' => true,
+                'shopList' => $shopList));
         }
 
     }
@@ -39,13 +47,16 @@ class ShopController extends Controller {
                     'name'  => $country->name
                 ));
             }
-            return response()->json(array('success' => true, 'countryList' => $countryList));
+            return response()->json(array(
+                'success' => true,
+                'countryList' => $countryList)
+            );
         } else {
             return response()->json(array('success' => false));
         }
     }
 
-    public function getCitiyList()
+    public function getCityList()
     {
         $user = Auth::user();
 
@@ -53,13 +64,15 @@ class ShopController extends Controller {
             $cities = Address::get();
             $cityList = array();
             foreach($cities as $city) {
-
                 array_push($cityList, array(
                     'id'    => $city->id,
-                    'name'  => $city->name
+                    'name'  => $city->city
                 ));
             }
-            return response()->json(array('success' => true, 'cityList' => $cityList));
+            return response()->json(array(
+                'success' => true,
+                'cityList' => $cityList)
+            );
         } else {
             return response()->json(array('success' => false));
         }
@@ -69,10 +82,35 @@ class ShopController extends Controller {
     {
         $user = Auth::user();
 
+        $newShopData = $request->input('newShop');
+
         if($user) {
-            dd($request);
-        }  else {
-            return response()->json(array('success' => false, 'message' => 'Um einen neuen Markt anzulegen muss du eingeloggt sein.'));
+            $address = Address::where('city', 'like', $newShopData['city']);
+            $newAddress = null;
+
+            if(count(get_object_vars($address)) <= 0){
+                $newAddress = Address::firstOrCreate([
+                    'city'          => $newShopData['city'],
+                    'country_id'    => $newShopData['countryId']
+                ]);
+            }
+
+            $newShop = Shop::firstOrCreate([
+                'name'          => $newShopData['name'],
+                'address_id'    => ($newAddress != null) ? $newAddress->id : $address->id
+            ]);
+            $shopList = $this::getShopList();
+            return response()->json(array(
+                'success' => true,
+                'message' => 'Speichern erfolgreich',
+                'newShop' => $newShop,
+                'shopList' => $shopList)
+            );
+        } else {
+            return response()->json(array(
+                'success' => false,
+                'message' => 'Um einen neuen Markt anzulegen muss du eingeloggt sein.')
+            );
         }
     }
 }
