@@ -217,7 +217,12 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
                     $("#new-shop-modal").modal('hide');
                     $scope.purchaseMessage = newShopResponse.data.message;
                     $scope.shopList = newShopResponse.data.shopList;
-                    $scope.newPurchase.shopSelected.id = newShopResponse.data.newShop.id;
+                    $scope.shopList.unshift({
+                        id: 'newShop',
+                        name: 'neuen Markt hinzufügen'
+                    });
+                    $scope.newPurchase.shopSelected = $scope.shopList[$scope.shopList.length-1];
+                    console.log($scope.newPurchase.shopSelected);
                     $scope.updateProducts();
                 }
             }
@@ -246,10 +251,7 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
                         selectedOptions: item.productList[5]
                     };
                     item.single_price = newProductResponse.data.newProduct.single_price;
-                    item.productList.id = newProductResponse.data.newProduct.id;
-                    item.productList.name = newProductResponse.data.newProduct.name;
-                    item.productList.unit = newProductResponse.data.newProduct.unitName;
-                    item.productList.single_price = newProductResponse.data.newProduct.single_price;
+                    item.productList = item.productFirstSelect.availableOptions[item.productFirstSelect.availableOptions.length -1];
                     item.productId = newProductResponse.data.newProduct.id;
                 } else if(newProductResponse.data.success == false) {
                 }
