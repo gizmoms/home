@@ -15,7 +15,6 @@ class CreateShoppinglistTables extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->index();
-            $table->integer('address_id')->unsigned();
             $table->timestamps();
         });
 
@@ -60,6 +59,8 @@ class CreateShoppinglistTables extends Migration
             $table->foreign('country_id')->references('id')->on('countries')->onUpdate('cascade')->onDelete('cascade');
         });
 
+        DB::statement("ALTER TABLE users ADD CONSTRAINT FK_address_address_id FOREIGN KEY (address_id) REFERENCES addresses(id);");
+
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->index();
@@ -89,6 +90,7 @@ class CreateShoppinglistTables extends Migration
             $table->integer('id', false, true)->index();
             $table->integer('shop_id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();
+            $table->integer('address_id')->unsigned()->index();
             $table->double('single_price', 15, 2);
             $table->date('used_at');
             $table->timestamps();
@@ -97,7 +99,7 @@ class CreateShoppinglistTables extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE product_details ADD PRIMARY KEY (shop_id, product_id);");
+        DB::statement("ALTER TABLE product_details ADD PRIMARY KEY (shop_id, product_id, address_id);");
         DB::statement("ALTER TABLE product_details MODIFY id int(10) AUTO_INCREMENT;");
 
         Schema::create('purchase_product', function (Blueprint $table) {

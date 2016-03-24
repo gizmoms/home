@@ -72,9 +72,9 @@ class UnitTableSeeder extends Seeder
         ]);
 
         Unit::firstOrCreate([
-            'name'          => 'Liter',
-            'code'          => 'l',
-            'single_amount' => '0.1'
+            'name'          => 'Flasche',
+            'code'          => 'Fl',
+            'single_amount' => '1'
         ]);
 
         Unit::firstOrCreate([
@@ -848,10 +848,17 @@ class CountryTableSeeder extends Seeder
 class AddressTableSeeder extends Seeder
 {
     public function run(){
-        Address::firstOrCreate([
+        $address = Address::firstOrCreate([
             'country_id' => '81',
             'city' => 'Stralsund'
         ]);
+
+        $users = User::get();
+        foreach($users as $user)
+        {
+            $user->address_id = $address->id;
+            $user->save();
+        }
     }
 }
 
@@ -859,13 +866,11 @@ class ShopTableSeeder extends Seeder
 {
     public function run(){
         Shop::firstOrCreate([
-            'name' => 'Edeka',
-            'address_id' => '1'
+            'name' => 'Edeka'
         ]);
 
         Shop::firstOrCreate([
-            'name' => 'Penny',
-            'address_id' => '1'
+            'name' => 'Penny'
         ]);
     }
 }
@@ -886,7 +891,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product1->id,
-            'single_price'  => '0,95'
+            'single_price'  => '0,95',
+            'address_id' => '1'
         ]);
 
         $product2 = Product::firstOrCreate([
@@ -897,7 +903,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product2->id,
-            'single_price'  => '0,89'
+            'single_price'  => '0,89',
+            'address_id' => '1'
         ]);
 
         $product3 = Product::firstOrCreate([
@@ -908,7 +915,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product3->id,
-            'single_price'  => '0,89'
+            'single_price'  => '0,89',
+            'address_id' => '1'
         ]);
 
         $product4 = Product::firstOrCreate([
@@ -920,6 +928,7 @@ class ProductTableSeeder extends Seeder
             'shop_id'   => '1',
             'product_id' => $product4->id,
             'single_price'  => '0,49',
+            'address_id' => '1'
         ]);
 
         $product5 = Product::firstOrCreate([
@@ -930,7 +939,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product5->id,
-            'single_price'  => '1,79'
+            'single_price'  => '1,79',
+            'address_id' => '1'
         ]);
 
         $product6 = Product::firstOrCreate([
@@ -941,7 +951,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product6->id,
-            'single_price'  => '1,88'
+            'single_price'  => '1,88',
+            'address_id' => '1'
         ]);
 
         $product8 = Product::firstOrCreate([
@@ -952,7 +963,8 @@ class ProductTableSeeder extends Seeder
         ProductDetails::firstOrCreate([
             'shop_id'   => '1',
             'product_id' => $product8->id,
-            'single_price'  => '0,77'
+            'single_price'  => '0,77',
+            'address_id' => '1'
         ]);
     }
 }

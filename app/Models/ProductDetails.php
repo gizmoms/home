@@ -6,7 +6,7 @@ class ProductDetails extends Model
 {
     protected $table = 'product_details';
 
-    protected $fillable = ['shop_id', 'product_id', 'single_price', 'used_at'];
+    protected $fillable = ['shop_id', 'product_id', 'address_id', 'single_price', 'used_at'];
 
     public function product()
     {
@@ -16,6 +16,11 @@ class ProductDetails extends Model
     public function shop()
     {
         return $this->belongsTo('App\Models\Shop', 'shop_id');
+    }
+
+    public function address()
+    {
+        return $this->belongsTo('App\Models\Address', 'address_id');
     }
 
 }

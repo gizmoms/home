@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use Carbon\Carbon;
-
 use App\Models\ProductDetails;
 use App\Models\Shop;
 use App\Models\Product;
@@ -51,15 +49,15 @@ class ProductController extends Controller {
     {
         $user = Auth::user();
         $newProductData = $request->input('newProduct');
-        $product = null;
+        $productExists = null;
 
         if($newProductData['newStockProduct'] == false){
-            $product = ProductDetails::where('shop_id', '=', $newProductData['shopId'])
+            $productExists = ProductDetails::where('shop_id', '=', $newProductData['shopId'])
                 ->where('product_id', '=', $newProductData['productId'])
-                ->first();
+                ->exists();
         }
 
-        if($user && $product == null) {
+        if($user && $productExists == false) {
 
             $category = Category::where('name', 'like', $newProductData['category'])->get();
             $stockProduct = Product::where('name', 'like', $newProductData['name'])->get();

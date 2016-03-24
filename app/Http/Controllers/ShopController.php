@@ -85,19 +85,20 @@ class ShopController extends Controller {
         $newShopData = $request->input('newShop');
 
         if($user) {
-            $address = Address::where('city', 'like', $newShopData['city']);
-            $newAddress = null;
+            $addressExist = Address::where('city', 'like', $newShopData['city'])->exists();
 
-            if(count(get_object_vars($address)) <= 0){
+            if(false == $addressExist){
                 $newAddress = Address::firstOrCreate([
                     'city'          => $newShopData['city'],
                     'country_id'    => $newShopData['countryId']
                 ]);
+            } elseif(true == $addressExist){
+                $address = Address::where('city', 'like', $newShopData['city'])->first();
             }
 
             $newShop = Shop::firstOrCreate([
                 'name'          => $newShopData['name'],
-                'address_id'    => ($newAddress != null) ? $newAddress->id : $address->id
+                'address_id'    => ($addressExist == false) ? $newAddress->id : $address->id
             ]);
             $shopList = $this::getShopList();
             return response()->json(array(

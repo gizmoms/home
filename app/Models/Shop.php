@@ -6,12 +6,7 @@ class Shop extends Model
 {
     protected $table = 'shops';
 
-    protected $fillable = ['name', 'address_id'];
-
-    public function address()
-    {
-        return $this->belongsTo('App\Models\Address', 'address_id');
-    }
+    protected $fillable = ['name'];
 
     public function products()
     {

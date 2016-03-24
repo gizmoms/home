@@ -19,53 +19,57 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
     $scope.id = 0;
 
     $scope.newPurchase = {
-        items: [],
-        tags: []
+        shopList: $scope.shopList(),
+        shopSelected: '',
+        boughtAt: '',
+        tags: [],
+        products: [],
+        total: 0.00,
+        productList: $scope.productList()
     };
-
-    $scope.products = {
-        items: []
-    };
-
-    $scope.newShop = {};
 
     $scope.newProduct =  {
-        newStockProduct: false,
+        name: '',
+        unitName: '',
+        unitList: $scope.unitList(),
         newUnit: false,
+        categoryName: '',
+        categoryList: $scope.categoryList(),
         newCategory: false,
-        category: ''
+        shopID: '',
+        singlePrice: ''
     };
 
     var spacebar = 32;
     $scope.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA, spacebar];
 
     $scope.addItem = function() {
-        $scope.updateProducts;
+        $scope.updateProducts();
         $scope.id = $scope.id+1;
-        $scope.newPurchase.items.push({
+        $scope.newPurchase.products.push({
             id: $scope.id,
-            qty: 1,
-            step: $scope.products.items.single_amount,
-            single_price: $scope.products.items.single_price,
-            description: 'Produkt',
-            cost: 0.00,
-            productList: $scope.products,
-            productFirstSelect: $scope.productData
+            productId: '',
+            productName: '',
+            productQty: 1,
+            productQtyStep: $scope.products.items.single_amount,
+            productSinglePrice: $scope.products.items.single_price,
+            productCost: 0.00,
+            productList: $scope.productList()
         });
     };
 
     $scope.removeItem = function(index) {
-        $scope.newPurchase.items.splice(index, 1);
+        $scope.newPurchase.products.splice(index, 1);
         $scope.id = $scope.id-1;
-        for(var i=index;i<=$scope.newPurchase.items.length;i++) {
-            $scope.newPurchase.items[i].id -= 1;
+        for(var i=index;i<=$scope.newPurchase.products.length;i++) {
+            $scope.newPurchase.products[i].id -= 1;
         }
     };
 
     $scope.total = function() {
         var total = 0;
-        angular.forEach($scope.newPurchase.items, function(item) {
-            total += item.qty * item.single_price;
+        angular.forEach($scope.newPurchase.products, function(product) {
+            total += product.productQty * product.productSinglePrice;
         });
         $scope.newPurchase.total = total;
         return total;
@@ -80,17 +84,8 @@ customInterpolationApp.controller('PurchaseForm', function ($scope, $http, $mdCo
         $scope.newPurchase.shopSelected = "";
     });
 
-    $http.get('/getCountries').then(function(countriesResponse) {
-        $scope.countryList = countriesResponse.data.countryList;
-        $scope.newShop.countrySelected = $scope.countryList[80];
-    });
-
     $http.get('/getCategories', {cache: true}).then(function(categoriesResponse) {
         $scope.categoryList = categoriesResponse.data.categoryList;
-    });
-
-    $http.get('/getCities', {cache: true}).then(function(citiesResponse) {
-       $scope.cityList = citiesResponse.data.cityList;
     });
 
     $scope.getProductDetails = function() {
